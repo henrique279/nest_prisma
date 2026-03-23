@@ -1,23 +1,32 @@
-import { Controller, Get} from '@nestjs/common';
+import { Controller, Get, Post, Param, Query, Body, Put, INJE} from '@nestjs/common';
 import { TasksService } from './tasks.service';
 
 @Controller('tasks')
-
 export class TasksController {
     constructor(private readonly taskService: TasksService) { }
+
     @Get()
     getTasks() {
-        return this.taskService.listAllTasks()
+        return this.taskService.listAllTasks();
     }
 
     @Get("/busca")
-    findMnayTask(@query queryParam: any) {
-        return this.taskService.listAllTasks()
+    findManyTask(@Query() queryParam: any) {
+        return this.taskService.listAllTasks();
     }
 
     @Get(":id")
-    findsingleTask(@Param('id') id: string) {
-        return this.taskService.findOneTask(id)
+    findSingleTask(@Param('id') id: string) {
+        return this.taskService.findOneTask(id);
     }
 
+    @Post()
+    createTask(@Body() body: any) {
+        return this.taskService.createTask(body);
+    }
+    
+    @Put(":id")  //Patch
+    updateTask(@Param('id') id:string, @Body() body: any) {
+        return this.taskService.update(id, body);
+    }
 }
