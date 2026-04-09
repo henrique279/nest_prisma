@@ -1,10 +1,17 @@
-
-import { IsString, MinLength } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString, MinLength } from 'class-validator';
 
 export class CreateTaskDto {
-    @IsString({ message: 'Name mus be a string'})
-    @MinLength(5, {message: 'Name mus be at '})
-    readonly name: string;
-    @IsString({ message: 'Name mus be a string'})
-    readonly description: string;
+	@IsString({ message: 'Name must be a string' })
+	@MinLength(5, { message: 'Name must be at least 5 characters long' })
+	@IsNotEmpty({ message: 'Name is required' })
+	readonly name: string;
+
+	@IsString({ message: 'Description must be a string' })
+	@MinLength(10, { message: 'Description must be at least 10 characters long' })
+	@IsNotEmpty({ message: 'Description is required' })
+	readonly description: string;
+
+	@IsNumber()
+	@IsNotEmpty()
+	readonly userId: number;
 }
